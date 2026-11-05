@@ -1,8 +1,8 @@
 class Disparos {
     constructor(ctx){
         this.ctx = ctx
-        this.x = 800
-        this.y = 400
+        this.x = 0
+        this.y = 0
         this.w = 5
         this.h = 5
         this.vx = 0
@@ -22,12 +22,16 @@ class Disparos {
          
         
     }
-    onKey(event){
+    onKey(event,x,y){
+        
         let isPressed = event.type === 'keydown'  
         
         if (isPressed && event.keyCode === 82){
+            this.x = x
+            this.y = y
             this.vx = 20 
-        }
+        
+        } 
     }
 
 }

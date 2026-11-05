@@ -39,7 +39,7 @@ class Player {
             case 39:
                 if (isPressed){
                     this.vx = 5
-                    console.log(event.keyCode)
+            
                 } else {
                     this.vx = 0
                 }

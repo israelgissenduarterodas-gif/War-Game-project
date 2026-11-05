@@ -9,6 +9,7 @@ class Game {
         this.player = new Player(this.ctx)
 
         this.disparo = new Disparos(this.ctx)
+        
 
     }
 
@@ -37,6 +38,7 @@ class Game {
         });
         this.player.move()
         this.disparo.move()
+        
     }
 
     draw(){
@@ -46,11 +48,13 @@ class Game {
         this.player.draw()
         this.disparo.draw()
         
+        
     }
 
     setupListener(){
-        addEventListener('keydown',(event)=>{
+        addEventListener('keydown',(event,)=>{
             this.player.onKey(event)
+
         }
         )
 
@@ -58,9 +62,12 @@ class Game {
             this.player.onKey(event)
         })
 
-        addEventListener('keydown', (event)=>{
-            this.disparo.onKey(event)
+        addEventListener('keydown', (event)=>{// PREGUNTAR ESTA LINEA DE CODIGO
+            
+            this.disparo.onKey(event,this.player.x,this.player.y)
         })
+
+        
 
     }
 }
