@@ -45,6 +45,7 @@ class Game {
     }
 
     draw(){
+        this.upDate()
         this.enemigo.draw()
         this.player.draw()
         this.disparo.draw()
@@ -65,6 +66,10 @@ class Game {
 
     }
 
+    upDate(){
+        this.player.update()
+    }
+
     setupListener(){
         addEventListener('keydown',(event,)=>{
             this.player.onKey(event)
@@ -76,7 +81,7 @@ class Game {
             this.player.onKey(event)
         })
 
-        addEventListener('keydown', (event)=>{// PREGUNTAR ESTA LINEA DE CODIGO
+        addEventListener('keydown', (event)=>{
 
             this.disparo.onKey(event,this.player.x,this.player.y)
         })
