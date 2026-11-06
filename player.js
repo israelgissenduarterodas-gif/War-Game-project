@@ -2,14 +2,14 @@ class Player {
     constructor(ctx){
         this.ctx = ctx
         this.x = 500
-        this.y = 400
+        this.y = 470
         this.w = 30
         this.h = 30
         this.vx = 0
         
     }
 
-     clear(){
+    clear(){
         this.ctx.clearRect(this.x, this.y, 1000, 500)
     }
 
@@ -55,5 +55,14 @@ class Player {
             default:
                 break;
         }
+    }
+
+    collidesWith(element){
+        return (
+            this.x < element.x + element.w &&
+            this.x + this.w > element.x &&
+            this.y < element.y + element.h &&
+            this.y + this.h > element.y
+        )
     }
 }

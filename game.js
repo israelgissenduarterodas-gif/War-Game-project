@@ -1,21 +1,20 @@
 class Game {
     constructor(canvasId) {
         this.canvas = document.getElementById('canvas')
+
         this.ctx = canvas.getContext('2d')
 
         this.enemigo = new Enemigo(this.ctx)
-        
+
         this.player = new Player(this.ctx)
 
         this.disparo = new Disparos(this.ctx)
-
+        
         this.disparoEnemigo = new Disparos(
             this.ctx,
             true,
             this.enemigo.x,
             this.enemigo.y)
-        
-
     }
 
     start(){
@@ -24,6 +23,7 @@ class Game {
             this.clear()
             this.move()
             this.draw()
+            this.checkCollisions()
 
         }, 1000/60);
     }
@@ -51,6 +51,18 @@ class Game {
         this.disparoEnemigo.draw()
         
         
+    }
+
+    checkCollisions(){
+        if (this.player.collidesWith(this.disparoEnemigo)) {
+            console.log('colision!')
+      }
+
+        if (this.enemigo.collidesWith(this.disparo)) {
+            console.log('colision2!')
+      }
+
+
     }
 
     setupListener(){

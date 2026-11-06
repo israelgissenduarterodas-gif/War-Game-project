@@ -18,21 +18,26 @@ class Disparos {
     }
 
     move(xx,yy){
+
         if(this.isEnemy === false){
-            this.x += -this.vx
+            this.y += -this.vy
         }
 
         if(this.isEnemy === true){
            let isOut = false
+
            if(!isOut){
-            this.vx = 20
-            this.x += this.vx
-            if(this.x === 1000){
-                isOut = true
+            this.vy = 20
+            this.y += this.vy
+
+            if(this.y >= 500){
+                
                 this.x = xx
                 this.y = yy
+                
             }
            }
+
             
 
         }
@@ -48,10 +53,12 @@ class Disparos {
         if (isPressed && event.keyCode === 82){
             this.x = x
             this.y = y
-            this.vx = 20 
+            this.vy = 20 
         
         } 
         }
     }
+
+    
 
 }

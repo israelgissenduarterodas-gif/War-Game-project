@@ -1,15 +1,15 @@
 class Enemigo {
-    constructor(ctx){
+    constructor(ctx,){
         this.ctx = ctx
-        this.x = 20
-        this.y = 400
+        this.x = 300
+        this.y = 50
         this.w = 30
         this.h = 30
         this.vx = 10
         this.vy = 0
         this.ay = 0.5
-        this.groundY = 500
-        this.isUp= false
+        this.isRight = false
+        
         /*
         
         this.img = new Image()
@@ -22,30 +22,43 @@ class Enemigo {
     }
 
     draw(){
+        
         this.ctx.fillRect(this.x, this.y, this.w, this.h)
     }
 
     move(){
         
-        if(!this.isUp){
-        
-            this.vy= -5
-            this.y += this.vy
+        if(this.isRight === false){
+            this.vx = 5
+            this.x += this.vx
+           if(this.x === 500){
+                this.isRight = true
 
-            if(this.y <= 300){
-                this.isUp = true
             }
-        }
-        if (this.isUp === true){
-            this.vy= 5
-            this.y += this.vy
-    
-            if(this.y === 400){
-                this.isUp = false
+         } 
+          
+         
+         if (this.isRight === true){
+            this.vx = -5
+            this.x += this.vx
+            
+            if(this.x === 300){
+                this.isRight = false
             }
-        }
         }
          
 
+    }
 
-}
+    collidesWith(element){
+        return (
+            this.x < element.x + element.w &&
+            this.x + this.w > element.x &&
+            this.y < element.y + element.h &&
+            this.y + this.h > element.y
+        )
+    }
+
+      
+        }
+         
