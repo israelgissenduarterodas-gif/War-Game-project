@@ -28,7 +28,7 @@ class Impact {
         
     }
 
-    draw(){
+    draw(xx,yy){
         if(this.isReady){
             this.ctx.drawImage(
                 this.img,
@@ -36,19 +36,17 @@ class Impact {
                 0,
                 this.frameW,
                 this.frameH,
-                this.x,
-                this.y,
+                this.x = xx,
+                this.y = yy,
                 this.w,
                 this.h)
         }
     }
 
-    update(xx,yy,col){
+    update(col){
         
         if(col){
         console.log('impacto!')
-        this.x = xx
-        this.y = yy
        
             this.frameTicks++;
  

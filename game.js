@@ -65,13 +65,14 @@ class Game {
     checkCollisions(){
         if (this.player.collidesWith(this.disparoEnemigo)) {
             this.collision = true
-            this.impact.draw()
+            this.impact.draw(this.player.x,this.player.y)
             
             
       }
 
         if (this.enemigo.collidesWith(this.disparo)) {
-           
+            this.collision = true
+            this.impact.draw(this.enemigo.x,this.enemigo.y)
       }
 
 
@@ -82,7 +83,7 @@ class Game {
         this.enemigo.update()
         this.disparo.update()
         this.disparoEnemigo.update()
-        this.impact.update(this.player.x,this.player.y,this.collision)
+        this.impact.update(this.collision)
         
         
         
