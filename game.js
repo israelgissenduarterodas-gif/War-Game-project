@@ -73,6 +73,8 @@ class Game {
     upDate(){
         this.player.update()
         this.enemigo.update()
+        this.disparo.update()
+        this.disparoEnemigo.update()
     }
 
     setupListener(){

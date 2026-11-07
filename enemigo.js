@@ -9,8 +9,6 @@ class Enemigo {
         this.isMoving = false
         this.frameTicks = 0 
         this.frameSpeed = 8
-        this.vy = 0
-        this.ay = 0.5
         this.isRight = false
     
         this.img = new Image()

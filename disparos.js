@@ -3,22 +3,25 @@ class Disparos {
         this.ctx = ctx
         this.x = x
         this.y = y
-        this.w = 10
-        this.h = 10
+        this.w = 30
+        this.h = 30
         this.vx = 0
+        this.isMoving = false
+        this.frameTicks = 0 
+        this.frameSpeed = 8
         this.isEnemy = isEnemy
 
         this.img = new Image()
-        this.img.src = 'bolafuego.png'
+        this.img.src = 'balas2.png'
         this.img.onload = ()=>{
             this.isReady = true
             this.frameW = Math.floor(this.img.naturalWidth / this.vFrames)
             this.frameH = Math.floor(this.img.naturalHeight / this.hFrames)
         }
         this.frameIndex = 0
-        this.currentFila = 0
-        this.vFrames = 1
+        this.vFrames = 4
         this.hFrames = 1
+        
     }
 
      clear(){
@@ -31,7 +34,7 @@ class Disparos {
             this.ctx.drawImage(
                 this.img,
                 this.frameIndex * this.frameW,
-                this.currentFila * this.frameH,
+                0,
                 this.frameW,
                 this.frameH,
                 this.x,
@@ -80,6 +83,32 @@ class Disparos {
             this.vy = 20 
         
         } 
+        }
+    }
+
+    update() {
+        
+        if (this.vy !== 0) {
+            this.isMoving = true;
+
+            
+        } else {
+            this.isMoving = false;
+            this.frameIndex = 0; 
+        }
+
+        if (this.isMoving) {
+            this.frameTicks++;
+
+            
+            if (this.frameTicks >= this.frameSpeed) {
+                this.frameTicks = 0;
+                this.frameIndex++;
+
+                if (this.frameIndex >= this.vFrames) {
+                    this.frameIndex = 0;
+                }
+            }
         }
     }
 
