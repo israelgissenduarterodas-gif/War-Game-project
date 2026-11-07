@@ -4,6 +4,8 @@ class Game {
 
         this.ctx = canvas.getContext('2d')
 
+        this.background = new Background(this.ctx)
+
         this.enemigo = new Enemigo(this.ctx)
 
         this.player = new Player(this.ctx)
@@ -29,6 +31,7 @@ class Game {
     }
 
     clear(){
+        this.background.clear()
         this.enemigo.clear()
         this.player.clear()
         this.disparo.clear()
@@ -45,6 +48,7 @@ class Game {
     }
 
     draw(){
+        this.background.draw()
         this.upDate()
         this.enemigo.draw()
         this.player.draw()
