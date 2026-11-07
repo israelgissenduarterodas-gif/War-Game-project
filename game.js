@@ -10,6 +10,8 @@ class Game {
 
         this.player = new Player(this.ctx)
 
+        this.impact = new Impact(this.ctx)
+
         this.disparo = new Disparos(this.ctx)
         
         this.disparoEnemigo = new Disparos(
@@ -37,6 +39,7 @@ class Game {
         this.player.clear()
         this.disparo.clear()
         this.disparoEnemigo.clear()
+        this.impact.clear()
         
     }
 
@@ -58,13 +61,17 @@ class Game {
         
     }
 
+
     checkCollisions(){
         if (this.player.collidesWith(this.disparoEnemigo)) {
-            console.log('colision!')
+            this.collision = true
+            this.impact.draw()
+            
+            
       }
 
         if (this.enemigo.collidesWith(this.disparo)) {
-            console.log('colision2!')
+           
       }
 
 
@@ -75,6 +82,10 @@ class Game {
         this.enemigo.update()
         this.disparo.update()
         this.disparoEnemigo.update()
+        this.impact.update(this.player.x,this.player.y,this.collision)
+        
+        
+        
     }
 
     setupListener(){
