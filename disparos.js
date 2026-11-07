@@ -3,31 +3,55 @@ class Disparos {
         this.ctx = ctx
         this.x = x
         this.y = y
-        this.w = 5
-        this.h = 5
+        this.w = 10
+        this.h = 10
         this.vx = 0
         this.isEnemy = isEnemy
+
+        this.img = new Image()
+        this.img.src = 'bolafuego.png'
+        this.img.onload = ()=>{
+            this.isReady = true
+            this.frameW = Math.floor(this.img.naturalWidth / this.vFrames)
+            this.frameH = Math.floor(this.img.naturalHeight / this.hFrames)
+        }
+        this.frameIndex = 0
+        this.currentFila = 0
+        this.vFrames = 1
+        this.hFrames = 1
     }
 
      clear(){
         this.ctx.clearRect(this.x, this.y, 1000, 500)
+        
     }
 
     draw(){
-        this.ctx.fillRect(this.x, this.y, this.w, this.h)
+        if(this.isReady){
+            this.ctx.drawImage(
+                this.img,
+                this.frameIndex * this.frameW,
+                this.currentFila * this.frameH,
+                this.frameW,
+                this.frameH,
+                this.x,
+                this.y,
+                this.w,
+                this.h)
+        }
     }
 
     move(xx,yy){
 
         if(this.isEnemy === false){
-            this.y += -this.vy
+            this.y += -5
         }
 
         if(this.isEnemy === true){
            let isOut = false
 
            if(!isOut){
-            this.vy = 20
+            this.vy = 5
             this.y += this.vy
 
             if(this.y >= 500){

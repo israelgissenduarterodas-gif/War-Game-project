@@ -10,7 +10,7 @@ class Player {
         this.frameTicks = 0 
         this.frameSpeed = 8
         this.img = new Image()
-        this.img.src = 'jugador.png'
+        this.img.src = 'sprite.png'
         this.img.onload = ()=>{
             
             this.isReady = true
@@ -19,7 +19,8 @@ class Player {
             this.frameH = Math.floor(this.img.naturalHeight / this.hFrames)
         }
 
-        this.frameIndex = 2
+        this.frameIndex = 0
+        this.currentFila = 0
         this.vFrames = 3
         this.hFrames = 2
 
@@ -36,7 +37,7 @@ class Player {
             this.ctx.drawImage(
                 this.img,
                 this.frameIndex * this.frameW,
-                0,
+                this.currentFila * this.frameH,
                 this.frameW,
                 this.frameH,
                 this.x,
@@ -101,6 +102,9 @@ class Player {
         // 1. Detectar si el jugador se está moviendo basándonos en su velocidad (vx)
         if (this.vx !== 0) {
             this.isMoving = true;
+
+            if (this.vx > 0) this.currentFila = 0;
+            if (this.vx < 0) this.currentFila = 1;
             
         } else {
             this.isMoving = false;

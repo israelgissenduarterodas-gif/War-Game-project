@@ -2,10 +2,10 @@ class Enemigo {
     constructor(ctx,){
         this.ctx = ctx
         this.x = 300
-        this.y = 35
+        this.y = 25
         this.w = 50
         this.h = 50
-        this.vx = 10
+        this.vx = 0
         this.isMoving = false
         this.frameTicks = 0 
         this.frameSpeed = 8
@@ -14,7 +14,7 @@ class Enemigo {
         this.isRight = false
     
         this.img = new Image()
-        this.img.src = 'jugador.png'
+        this.img.src = 'sprite.png'
         this.img.onload = ()=>{
             this.isReady = true
             this.frameW = Math.floor(this.img.naturalWidth / this.vFrames)
@@ -22,6 +22,7 @@ class Enemigo {
         }
 
         this.frameIndex = 2
+        this.currentFila = 0
         this.vFrames = 3
         this.hFrames = 2
         
@@ -37,7 +38,7 @@ class Enemigo {
             this.ctx.drawImage(
                 this.img,
                 this.frameIndex * this.frameW,
-                0,
+                this.currentFila * this.frameH,
                 this.frameW,
                 this.frameH,
                 this.x,
@@ -81,25 +82,26 @@ class Enemigo {
     }
 
     update() {
-        // 1. Detectar si el jugador se está moviendo basándonos en su velocidad (vx)
+        
         if (this.vx !== 0) {
             this.isMoving = true;
+
+            if (this.vx > 0) this.currentFila = 0;
+            if (this.vx < 0) this.currentFila = 1;
             
         } else {
             this.isMoving = false;
-            this.frameIndex = 0; // Si se detiene, vuelve al frame de estar quieto
+            this.frameIndex = 0; 
         }
 
-        // 2. Lógica de animación (solo si se está moviendo)
         if (this.isMoving) {
             this.frameTicks++;
 
-            // Cuando el contador llega al límite, avanzamos al siguiente frame
+            
             if (this.frameTicks >= this.frameSpeed) {
                 this.frameTicks = 0;
                 this.frameIndex++;
 
-                // Si llegamos al final de las columnas (vFrames), reiniciamos al primer frame (0)
                 if (this.frameIndex >= this.vFrames) {
                     this.frameIndex = 0;
                 }
