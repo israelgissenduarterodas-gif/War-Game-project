@@ -7,7 +7,7 @@ class Player {
         this.h = 60
         this.vx = 0
         this.isMoving = false
-        this.frameTicks = 0 // Contador de ciclos del juego
+        this.frameTicks = 0 
         this.frameSpeed = 8
         this.img = new Image()
         this.img.src = 'jugador.png'

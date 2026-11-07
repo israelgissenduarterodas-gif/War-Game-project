@@ -24,6 +24,7 @@ class Game {
             this.setupListener()
             this.clear()
             this.move()
+            this.upDate()
             this.draw()
             this.checkCollisions()
 
@@ -49,7 +50,6 @@ class Game {
 
     draw(){
         this.background.draw()
-        this.upDate()
         this.enemigo.draw()
         this.player.draw()
         this.disparo.draw()
@@ -72,6 +72,7 @@ class Game {
 
     upDate(){
         this.player.update()
+        this.enemigo.update()
     }
 
     setupListener(){
