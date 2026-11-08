@@ -6,6 +6,7 @@ class Enemigo {
         this.w = 50
         this.h = 50
         this.vx = 0
+        this.health = 100
         this.isMoving = false
         this.frameTicks = 0 
         this.frameSpeed = 8

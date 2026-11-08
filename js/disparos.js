@@ -51,9 +51,8 @@ class Disparos {
             this.y += -10
         } 
         if (this.y <= -10){
-                this.y = -10
-                console.log(this.y)
-            }
+                this.y = -10 // ESTO ES PARA QUE LA BALA DE PLAYER NO SE SUME [Y=] HASTA INFINITO
+            }                //PREGUNTAR FORMA MAS EFICIENTE DE HACER AL PROFESOR
 
         if(this.isEnemy === true){
 

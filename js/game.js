@@ -14,6 +14,8 @@ class Game {
 
         this.player = new Player(this.ctx)
 
+        this.avion = new Avion(this.ctx)
+
         this.porcentaje = new Porcentaje(this.ctx)
 
         this.impact = new Impact(this.ctx)
@@ -42,7 +44,7 @@ class Game {
     }
 
     stop(){
-        if(this.player.health <= 0){
+        if(this.player.health <= 0 || this.enemigo.health <=0){
             console.log('dead!')
             clearInterval(this.intervalId)
         }
@@ -53,6 +55,7 @@ class Game {
         this.background.clear()
         this.enemigo.clear()
         this.player.clear()
+        this.avion.clear()
         this.disparo.clear()
         this.disparoEnemigo.clear()
         this.impact.clear()
@@ -64,6 +67,7 @@ class Game {
     move(){
         this.enemigo.move()
         this.player.move()
+        this.avion.move()
         this.disparo.move()
         this.disparoEnemigo.move(this.enemigo.x,this.enemigo.y)
         
@@ -74,6 +78,7 @@ class Game {
         this.enemigo.draw()
         this.player.draw()
         this.disparo.draw()
+        this.avion.draw()
         this.disparoEnemigo.draw()
         this.status.draw()
         this.porcentaje.draw()
@@ -86,7 +91,7 @@ class Game {
             this.impact.draw(this.player.x,this.player.y)
             this.player.health -= 2 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
             this.porcentaje.updateHealth(this.player.health)
-            console.log(this.player.health)
+            console.log(`player: ${this.player.health}`)
             
             
       }
@@ -94,6 +99,8 @@ class Game {
         if (this.enemigo.collidesWith(this.disparo)) {
             this.collision = true
             this.impact.draw(this.enemigo.x,this.enemigo.y)
+            this.enemigo.health -= 2 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            console.log(`enemy: ${this.enemigo.health}`)
       }
 
 

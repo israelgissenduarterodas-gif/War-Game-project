@@ -48,19 +48,19 @@ class Porcentaje {
          switch(health){
             case 100:
                 this.img.src = 'images/100.png'
-                console.log('100')
+                
                 break;
             case 80:
                 this.img.src = 'images/80.png'
-                console.log('80')
+                
                 break;
             case 60:
                 this.img.src = 'images/60.png'
-                console.log('60')
+                
                 break;
             case 40:
                 this.img.src = 'images/40.png'
-                console.log('40')
+                
                 break;
             case 20:
                 this.img.src = 'images/20.png'
