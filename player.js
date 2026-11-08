@@ -6,6 +6,7 @@ class Player {
         this.w = 60
         this.h = 60
         this.vx = 0
+        this.health = 100
         this.isMoving = false
         this.frameTicks = 0 
         this.frameSpeed = 8

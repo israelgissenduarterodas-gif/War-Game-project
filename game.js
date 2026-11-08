@@ -4,11 +4,17 @@ class Game {
 
         this.ctx = canvas.getContext('2d')
 
+        this.intervalId = null
+
         this.background = new Background(this.ctx)
+
+        this.status = new Status(this.ctx)
 
         this.enemigo = new Enemigo(this.ctx)
 
         this.player = new Player(this.ctx)
+
+        this.porcentaje = new Porcentaje(this.ctx)
 
         this.impact = new Impact(this.ctx)
 
@@ -19,18 +25,28 @@ class Game {
             true,
             this.enemigo.x,
             this.enemigo.y)
+
     }
 
     start(){
-        setInterval(() => {
+      this.intervalId = setInterval(() => {
             this.setupListener()
             this.clear()
             this.move()
             this.upDate()
             this.draw()
             this.checkCollisions()
+            this.stop()
 
         }, 1000/60);
+    }
+
+    stop(){
+        if(this.player.health <= 0){
+            console.log('dead!')
+            clearInterval(this.intervalId)
+        }
+        
     }
 
     clear(){
@@ -40,6 +56,8 @@ class Game {
         this.disparo.clear()
         this.disparoEnemigo.clear()
         this.impact.clear()
+        this.status.clear()
+        this.porcentaje.clear()
         
     }
 
@@ -57,8 +75,8 @@ class Game {
         this.player.draw()
         this.disparo.draw()
         this.disparoEnemigo.draw()
-        
-        
+        this.status.draw()
+        this.porcentaje.draw()
     }
 
 
@@ -66,6 +84,9 @@ class Game {
         if (this.player.collidesWith(this.disparoEnemigo)) {
             this.collision = true
             this.impact.draw(this.player.x,this.player.y)
+            this.player.health -= 2 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            this.porcentaje.updateHealth(this.player.health)
+            console.log(this.player.health)
             
             
       }
@@ -84,17 +105,12 @@ class Game {
         this.disparo.update()
         this.disparoEnemigo.update()
         this.impact.update(this.collision)
-        
-        
-        
     }
 
     setupListener(){
         addEventListener('keydown',(event,)=>{
             this.player.onKey(event)
-
-        }
-        )
+        })
 
          addEventListener('keyup',(event)=>{
             this.player.onKey(event)
@@ -104,8 +120,5 @@ class Game {
 
             this.disparo.onKey(event,this.player.x,this.player.y)
         })
-
-        
-
     }
 }

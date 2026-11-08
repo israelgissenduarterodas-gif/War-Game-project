@@ -3,9 +3,10 @@ class Disparos {
         this.ctx = ctx
         this.x = x
         this.y = y
-        this.w = 30
-        this.h = 30
+        this.w = 8
+        this.h = 8
         this.vx = 0
+        this.isOut = false
         this.isMoving = false
         this.frameTicks = 0 
         this.frameSpeed = 8
@@ -47,14 +48,17 @@ class Disparos {
     move(xx,yy){
 
         if(this.isEnemy === false){
-            this.y += -5
-        }
+            this.y += -10
+        } 
+        if (this.y <= -10){
+                this.y = -10
+                console.log(this.y)
+            }
 
         if(this.isEnemy === true){
-           let isOut = false
 
-           if(!isOut){
-            this.vy = 5
+           if(!this.isOut){
+            this.vy = 10
             this.y += this.vy
 
             if(this.y >= 500){
@@ -80,7 +84,6 @@ class Disparos {
         if (isPressed && event.keyCode === 82){
             this.x = x
             this.y = y
-            this.vy = 20 
         
         } 
         }

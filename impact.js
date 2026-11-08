@@ -4,11 +4,11 @@ class Impact {
         this.x = 0
         this.y = 0
         this.w = 100
-        this.h =100
+        this.h = 100
 
         this.isMoving = false
         this.frameTicks = 0 
-        this.frameSpeed = 3
+        this.frameSpeed = 1
 
         this.img = new Image()
         this.img.src = 'impacto.png'
@@ -43,10 +43,9 @@ class Impact {
         }
     }
 
-    update(col){
+    update(col){ // el parametro col es si el resultado de collision es true
         
         if(col){
-        console.log('impacto!')
        
             this.frameTicks++;
  
