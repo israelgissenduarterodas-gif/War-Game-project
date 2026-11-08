@@ -7,7 +7,7 @@ class Background {
         this.h = 500
 
         this.bgd = new Image()
-        this.bgd.src = 'mapa.jpg'
+        this.bgd.src = 'images/mapa.jpg'
         this.bgd.onload = ()=>{
             this.isReady = true
         }

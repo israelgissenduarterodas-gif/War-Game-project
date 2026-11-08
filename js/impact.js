@@ -11,7 +11,7 @@ class Impact {
         this.frameSpeed = 1
 
         this.img = new Image()
-        this.img.src = 'impacto.png'
+        this.img.src = 'images/impacto.png'
         
         this.img.onload = ()=>{
             this.isReady = true
