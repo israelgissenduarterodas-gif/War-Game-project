@@ -48,7 +48,7 @@ class Avion {
     move(){
         
         if(this.isRight === false){
-            this.vx = 10
+            this.vx = 7
             this.x += this.vx
            if(this.x >= 2000){
                 this.isRight = true

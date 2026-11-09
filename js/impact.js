@@ -8,7 +8,7 @@ class Impact {
 
         this.isMoving = false
         this.frameTicks = 0 
-        this.frameSpeed = 1
+        this.frameSpeed = 2
 
         this.img = new Image()
         this.img.src = 'images/impacto.png'

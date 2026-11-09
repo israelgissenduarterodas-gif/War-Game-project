@@ -16,6 +16,8 @@ class Game {
 
         this.avion = new Avion(this.ctx)
 
+        this.misil = new Misil(this.ctx,this.avion.x,this.avion.y)
+
         this.porcentaje = new Porcentaje(this.ctx)
 
         this.impact = new Impact(this.ctx)
@@ -56,6 +58,7 @@ class Game {
         this.enemigo.clear()
         this.player.clear()
         this.avion.clear()
+        this.misil.clear()
         this.disparo.clear()
         this.disparoEnemigo.clear()
         this.impact.clear()
@@ -68,6 +71,7 @@ class Game {
         this.enemigo.move()
         this.player.move()
         this.avion.move()
+        this.misil.move(this.avion.x,this.avion.y)
         this.disparo.move()
         this.disparoEnemigo.move(this.enemigo.x,this.enemigo.y)
         
@@ -79,6 +83,7 @@ class Game {
         this.player.draw()
         this.disparo.draw()
         this.avion.draw()
+        this.misil.draw()
         this.disparoEnemigo.draw()
         this.status.draw()
         this.porcentaje.draw()
@@ -103,6 +108,16 @@ class Game {
             console.log(`enemy: ${this.enemigo.health}`)
       }
 
+       if (this.player.collidesWith(this.misil)) {
+            this.collision = true
+            this.impact.draw(this.player.x,this.player.y)
+            this.player.health -= 10 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            this.porcentaje.updateHealth(this.player.health)
+            console.log(`player: ${this.player.health}`)
+            
+            
+      }
+
 
     }
 
@@ -112,6 +127,7 @@ class Game {
         this.disparo.update()
         this.disparoEnemigo.update()
         this.impact.update(this.collision)
+        this.misil.animate()
     }
 
     setupListener(){
