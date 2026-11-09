@@ -7,6 +7,8 @@ class Game {
 
         this.intervalId = null
 
+        this.landingInterval = null
+
         this.landing = new Landing(this.ctx)
         this.marco = new Marco(this.ctx)
         this.startbut = new Startbut(this.ctx)
@@ -38,7 +40,7 @@ class Game {
     }
 
     landingPage(){
-       setInterval(()=>{
+    this.landingInterval = setInterval(()=>{
         this.landing.clear()
         this.marco.clear()
         this.startbut.clear()
@@ -46,6 +48,7 @@ class Game {
         this.landing.draw()
         this.marco.draw()
         this.startbut.draw()
+
         this.startbut.animate()
        },1000/60)
 
@@ -71,6 +74,18 @@ class Game {
         }
         
     }
+
+    stopLanding(){
+        const handleEnter = (event) => {
+            if (event.key === 'Enter') {
+                clearInterval(myGame.landingInterval);
+                removeEventListener('keydown', handleEnter);
+                myGame.start();
+            }
+  };
+
+  addEventListener('keydown', handleEnter);
+}
 
     clear(){
         this.background.clear()
@@ -162,5 +177,7 @@ class Game {
 
             this.disparo.onKey(event,this.player.x,this.player.y)
         })
+
+
     }
 }

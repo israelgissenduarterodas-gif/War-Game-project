@@ -48,14 +48,9 @@ class Startbut{
     }
 
     animate(){
-        
-        
 
         if (this.isMoving) {
             this.frameTicks++
-            
-            
-
             
             if (this.frameTicks >= this.frameSpeed) {
                 this.frameTicks = 0
