@@ -1,10 +1,15 @@
 class Game {
     constructor(canvasId) {
+
         this.canvas = document.getElementById('canvas')
 
         this.ctx = canvas.getContext('2d')
 
         this.intervalId = null
+
+        this.landing = new Landing(this.ctx)
+        this.marco = new Marco(this.ctx)
+        this.startbut = new Startbut(this.ctx)
 
         this.background = new Background(this.ctx)
 
@@ -29,6 +34,20 @@ class Game {
             true,
             this.enemigo.x,
             this.enemigo.y)
+
+    }
+
+    landingPage(){
+       setInterval(()=>{
+        this.landing.clear()
+        this.marco.clear()
+        this.startbut.clear()
+
+        this.landing.draw()
+        this.marco.draw()
+        this.startbut.draw()
+        this.startbut.animate()
+       },1000/60)
 
     }
 
