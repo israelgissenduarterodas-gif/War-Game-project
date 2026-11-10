@@ -26,7 +26,14 @@ class Player {
         this.hFrames = 2
 
         
-        
+        this.isAlive = true
+    }
+
+    lifeStatus(health){
+        if(health <= 0){
+            this.isAlive = false
+            
+        }
     }
 
     clear(){
@@ -34,7 +41,8 @@ class Player {
     }
 
     draw(){
-        if(this.isReady){
+        if(!this.isAlive) return;
+            if(this.isReady){
             this.ctx.drawImage(
                 this.img,
                 this.frameIndex * this.frameW,
@@ -46,19 +54,23 @@ class Player {
                 this.w,
                 this.h)
         }
+        
     }
 
     move(){
 
-         this.x += this.vx
+        if(!this.isAlive) return;
 
-         if (this.x < 0){
-            this.x = 0
-         }
+            this.x += this.vx
 
-         if (this.x >= 970){
-            this.x = 970
-         }
+            if (this.x < 0){
+                this.x = 0
+            }
+
+            if (this.x >= 970){
+                this.x = 970
+            }
+        
         
     }
 
@@ -101,7 +113,8 @@ class Player {
 
     update() {
         // 1. Detectar si el jugador se está moviendo basándonos en su velocidad (vx)
-        if (this.vx !== 0) {
+        if(!this.isAlive) return;
+            if (this.vx !== 0) {
             this.isMoving = true;
 
             if (this.vx > 0) this.currentFila = 0;
@@ -127,5 +140,6 @@ class Player {
                 }
             }
         }
+        
     }
 }

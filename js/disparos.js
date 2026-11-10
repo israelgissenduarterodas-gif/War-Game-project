@@ -3,13 +3,13 @@ class Disparos {
         this.ctx = ctx
         this.x = x
         this.y = y
-        this.w = 8
-        this.h = 8
+        this.w = 15
+        this.h = 15
         this.vx = 0
         this.isOut = false
         this.isMoving = false
         this.frameTicks = 0 
-        this.frameSpeed = 8
+        this.frameSpeed = 2
         this.isEnemy = isEnemy
 
         this.img = new Image()
