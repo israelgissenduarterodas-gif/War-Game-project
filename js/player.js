@@ -37,7 +37,7 @@ class Player {
     }
 
     clear(){
-        this.ctx.clearRect(this.x, this.y, 1000, 500)
+        this.ctx.clearRect(this.x, this.y, 0, 0)
     }
 
     draw(){

@@ -24,15 +24,25 @@ class Enemigo {
         this.currentFila = 0
         this.vFrames = 3
         this.hFrames = 2
+
+        this.isAlive = true
         
+    }
+
+    lifeStatus(health){
+        
+        if(health <= 0){
+            this.isAlive = false
+            
+        }
     }
 
     clear(){
-        this.ctx.clearRect(this.x, this.y, 1000, 500)
+        this.ctx.clearRect(this.x, this.y, 0, 0)
     }
 
     draw(){
-        
+    if(!this.isAlive) return;
         if(this.isReady){
             this.ctx.drawImage(
                 this.img,
@@ -48,7 +58,7 @@ class Enemigo {
     }
 
     move(){
-        
+       if(!this.isAlive) return; 
         if(this.isRight === false){
             this.vx = 5
             this.x += this.vx
@@ -81,31 +91,31 @@ class Enemigo {
     }
 
     update() {
-        
-        if (this.vx !== 0) {
-            this.isMoving = true;
+        if(!this.isAlive) return;
+            if (this.vx !== 0) {
+                this.isMoving = true;
 
-            if (this.vx > 0) this.currentFila = 0;
-            if (this.vx < 0) this.currentFila = 1;
-            
-        } else {
-            this.isMoving = false;
-            this.frameIndex = 0; 
-        }
+                if (this.vx > 0) this.currentFila = 0;
+                if (this.vx < 0) this.currentFila = 1;
+                
+            } else {
+                this.isMoving = false;
+                this.frameIndex = 0; 
+            }
 
-        if (this.isMoving) {
-            this.frameTicks++;
+            if (this.isMoving) {
+                this.frameTicks++;
 
-            
-            if (this.frameTicks >= this.frameSpeed) {
-                this.frameTicks = 0;
-                this.frameIndex++;
+                
+                if (this.frameTicks >= this.frameSpeed) {
+                    this.frameTicks = 0;
+                    this.frameIndex++;
 
-                if (this.frameIndex >= this.vFrames) {
-                    this.frameIndex = 0;
+                    if (this.frameIndex >= this.vFrames) {
+                        this.frameIndex = 0;
+                    }
                 }
             }
-        }
     }
 
       

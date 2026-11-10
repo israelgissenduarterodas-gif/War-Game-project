@@ -33,6 +33,8 @@ class Game {
 
         this.dead = new Dead(this.ctx)
 
+        this.deadEnemigo = new Dead(this.ctx)
+
         this.ground = 480
         
         this.disparoEnemigo = new Disparos(
@@ -66,14 +68,15 @@ class Game {
             this.upDate()
             this.draw()
             this.checkCollisions()
-            this.isDead()
+            this.isDeadPlayer()
+            this.isDeadEnemy()
             this.stop()
 
         }, 1000/60);
     }
 
     stop(){
-        if(this.player.health <= 0 || this.enemigo.health <=0){
+        if(this.player.health <= 0 || this.enemigo.health <= 0){
         
             setTimeout(() => {
                clearInterval(this.intervalId) 
@@ -83,12 +86,30 @@ class Game {
         }    
     }
 
-    isDead(){
+    isDeadPlayer(){
         if(this.player.health <= 0){
             this.dead.clear()
+            
             this.dead.draw(this.player.x,this.player.y)
+            
             this.player.lifeStatus(this.player.health)
+           
             this.dead.update()
+            
+            
+        }
+    }
+
+    isDeadEnemy(){
+        if(this.enemigo.health <= 0){
+            
+            this.deadEnemigo.clear()
+            
+            this.deadEnemigo.draw(this.enemigo.x,this.enemigo.y)
+            
+            this.enemigo.lifeStatus(this.enemigo.health)
+            
+            this.deadEnemigo.update()
             
         }
     }
@@ -158,8 +179,8 @@ class Game {
         if (this.enemigo.collidesWith(this.disparo)) {
             this.collision = true
             this.impact.draw(this.enemigo.x,this.enemigo.y)
-            this.enemigo.health -= 2 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
-            
+            this.enemigo.health -= 10 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            console.log(this.enemigo.health)
       }
 
        if (this.player.collidesWith(this.misil)) {
