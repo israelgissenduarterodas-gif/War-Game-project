@@ -4,5 +4,5 @@ let myGame = new Game(canVas)
 
 myGame.landingPage()
 
-myGame.stopLanding()
+myGame.startGame()
 

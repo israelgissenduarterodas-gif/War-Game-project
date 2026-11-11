@@ -8,10 +8,12 @@ class Game {
         this.deadInterval = null
         this.intervalId = null
         this.landingInterval = null
+        this.endingInterval = null
 
         this.landing = new Landing(this.ctx)
         this.marco = new Marco(this.ctx)
         this.startbut = new Startbut(this.ctx)
+        this.endbut = new Endbutton(this.ctx)
 
         this.background = new Background(this.ctx)
 
@@ -24,6 +26,8 @@ class Game {
         this.avion = new Avion(this.ctx)
 
         this.misil = new Misil(this.ctx,this.avion.x,this.avion.y)
+
+        this.collision = false
 
         this.porcentaje = new Porcentaje(this.ctx)
 
@@ -60,6 +64,18 @@ class Game {
 
     }
 
+    endingPage(){
+        this.landing.clear()
+        this.marco.clear()
+        this.endbut.clear()
+
+        this.landing.draw()
+        this.marco.draw()
+        this.endbut.draw()
+        this.endbut.animate()
+
+    }
+
     start(){
       this.intervalId = setInterval(() => {
             this.setupListener()
@@ -79,7 +95,12 @@ class Game {
         if(this.player.health <= 0 || this.enemigo.health <= 0){
         
             setTimeout(() => {
-               clearInterval(this.intervalId) 
+               
+                clearInterval(this.intervalId) 
+            this.endingInterval = setInterval(()=>{
+                    this.endingPage()
+                    this.restartGame()
+               },1000/60)
             }, 1000);
             
             
@@ -114,17 +135,29 @@ class Game {
         }
     }
 
-    stopLanding(){
+    startGame(){
         const handleEnter = (event) => {
             if (event.key === 'Enter') {
-                clearInterval(myGame.landingInterval);
+                clearInterval(this.landingInterval);
                 removeEventListener('keydown', handleEnter);
                 myGame.start();
             }
-  };
+        };
 
-  addEventListener('keydown', handleEnter);
-}
+                addEventListener('keydown', handleEnter);
+    }
+
+    restartGame(){
+        const handleEnter2 = (event) => {
+            if (event.key === 'Enter') {
+                clearInterval(this.endingInterval);
+                removeEventListener('keydown', handleEnter2);
+                location.reload()// preguntar mañama
+            }
+        };
+
+                addEventListener('keydown', handleEnter2);
+    }
 
     clear(){
         this.background.clear()
@@ -144,7 +177,7 @@ class Game {
         this.enemigo.move()
         this.player.move()
         this.avion.move()
-        this.misil.move(this.avion.x,this.avion.y)
+        this.misil.move(this.avion.x,this.avion.y,this.collision)
         this.disparo.move()
         this.disparoEnemigo.move(this.enemigo.x,this.enemigo.y)
         
@@ -158,7 +191,6 @@ class Game {
         this.avion.draw()
         this.misil.draw()
         this.disparoEnemigo.draw()
-        this.impact.draw()
         this.status.draw()
         this.porcentaje.draw()
         
@@ -168,7 +200,9 @@ class Game {
     checkCollisions(){
         if (this.player.collidesWith(this.disparoEnemigo)) {
             this.collision = true
+            this.impact.clear()
             this.impact.draw(this.player.x,this.player.y)
+            this.impact.update(this.collision)
             this.player.health -= 2 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
             this.porcentaje.updateHealth(this.player.health)
             
@@ -178,14 +212,18 @@ class Game {
 
         if (this.enemigo.collidesWith(this.disparo)) {
             this.collision = true
+            this.impact.clear()
             this.impact.draw(this.enemigo.x,this.enemigo.y)
-            this.enemigo.health -= 10 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            this.impact.update(this.collision)
+            this.enemigo.health -= 2 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
             console.log(this.enemigo.health)
       }
 
        if (this.player.collidesWith(this.misil)) {
             this.collision = true
+            this.impact.clear()
             this.impact.draw(this.player.x,this.player.y)
+            this.impact.update(this.collision)
             this.player.health -= 10 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
             this.misil.x = this.avion.x
             this.misil.y = this.avion.y
@@ -203,7 +241,7 @@ class Game {
         this.enemigo.update()
         this.disparo.update()
         this.disparoEnemigo.update()
-        this.impact.update(this.collision)
+        
         this.misil.animate()
         
     }

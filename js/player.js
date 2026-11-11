@@ -6,8 +6,11 @@ class Player {
         this.w = 60
         this.h = 60
         this.vx = 0
+        this.vy = 0
+        this.ay = 0
         this.health = 100
-        this.isMoving = false
+        this.inGround = true
+        this.ground = 420
         this.frameTicks = 0 
         this.frameSpeed = 8
         this.img = new Image()
@@ -62,6 +65,8 @@ class Player {
         if(!this.isAlive) return;
 
             this.x += this.vx
+            this.y += this.vy
+            this.vy += this.ay
 
             if (this.x < 0){
                 this.x = 0
@@ -70,6 +75,19 @@ class Player {
             if (this.x >= 970){
                 this.x = 970
             }
+
+            if (this.y != this.ground){
+                this.inGround = false
+            }
+
+            if (this.y >= this.ground){
+                this.y = this.ground
+                this.vy = 0
+                this.ay = 0
+                this.inGround = true
+            }
+
+           
         
         
     }
@@ -92,6 +110,16 @@ class Player {
                     this.vx = -5
                 } else {
                     this.vx = 0
+                }
+                break;
+            
+            case 32:
+                if (isPressed && this.inGround){
+                    this.vy = -20
+                    this.ay = 0.5
+                    
+                } else {
+                    this.vy = 0
                 }
                 break;
         

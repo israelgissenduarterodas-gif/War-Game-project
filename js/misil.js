@@ -6,6 +6,8 @@ class Misil {
         this.w = 100
         this.h = 50
         this.vx = 0
+        this.ground = 420
+        this.isRight = false
         this.isDrop = false
         this.isMoving = false
         this.frameTicks = 0 
@@ -44,35 +46,41 @@ class Misil {
         }
     }
 
-    move(xx,yy){
-       
-           if(!this.isDrop){
-            
+    
+
+    move(xx,yy,collision){
+           
+       if(!this.isDrop){
             this.vy = 5
-            this.vx = 7
             this.y += this.vy
-            this.x += this.vx
-              
-                if(this.y >= 600){
-                    this.isDrop = true
-            }
+            
         }
-            if(this.isDrop === true){
-                    
-                console.log(this.x)
-                console.log(this.y)
-                this.isDrop = false
-                this.x = xx
-                this.y = yy
-                //
-                //
-            }
+
+        if(this.y >= this.ground){
+                this.vy = 0
+                this.y = this.ground
+                this.isDrop = true
+                this.vx = 10
+                this.x += this.vx
+            }  
+        
+        if (collision){
+            this.isDrop = false
+           
+        }
+
+        if (this.x >= 1000){
+            this.isDrop = false
+            this.x = xx
+            this.y = yy
+           
+        }
         
     }
 
     animate(){
         
-        if (this.vy !== 0) {
+        if (this.vx !== 0) {
             this.isMoving = true
 
             

@@ -8,7 +8,7 @@ class Impact {
 
         this.isMoving = false
         this.frameTicks = 0 
-        this.frameSpeed = 2
+        this.frameSpeed = 8
 
         this.img = new Image()
         this.img.src = 'images/impacto.png'
@@ -24,7 +24,7 @@ class Impact {
     }
 
     clear(){
-        this.ctx.clearRect(this.x, this.y, 1000, 500)
+        this.ctx.clearRect(this.x, this.y, 0, 0)
         
     }
 
