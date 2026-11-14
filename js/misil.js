@@ -3,10 +3,10 @@ class Misil {
         this.ctx = ctx
         this.x = x
         this.y = y
-        this.w = 100
-        this.h = 50
+        this.w = 60
+        this.h = 30
         this.vx = 0
-        this.ground = 420
+        this.ground = 450
         this.isRight = false
         this.isDrop = false
         this.isMoving = false

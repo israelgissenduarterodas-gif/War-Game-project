@@ -1,7 +1,7 @@
 class Avion {
     constructor(ctx,){
         this.ctx = ctx
-        this.x = 100
+        this.x = 50
         this.y = 100
         this.w = 150
         this.h = 80
@@ -9,6 +9,10 @@ class Avion {
         this.frameTicks = 0 
         this.frameSpeed = 8
         this.isRight = false
+
+        this.sonido = new Audio('sound/jetfigth.mp3') 
+        this.sonido.volume = 0.5
+        this.sonido.loop = true
     
         this.img = new Image()
         this.img.src = 'images/f18.png'
@@ -48,9 +52,9 @@ class Avion {
     move(){
         
         if(this.isRight === false){
-            this.vx = 3
+            this.vx = 6
             this.x += this.vx
-           if(this.x >= 1000){
+           if(this.x >= 2600){
                 this.isRight = true
 
             }
@@ -73,6 +77,14 @@ class Avion {
             this.y < element.y + element.h &&
             this.y + this.h > element.y
         )
+    }
+
+    sonidoJet(){
+        if(this.x === 50 && this.y === 100){
+            this.sonido.pause()
+            this.sonido.currentTime = 0
+            this.sonido.play()
+        }
     }
 
     update() {

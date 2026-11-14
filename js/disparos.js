@@ -12,6 +12,9 @@ class Disparos {
         this.frameSpeed = 2
         this.isEnemy = isEnemy
 
+        this.sonido = new Audio('sound/disparo.mp3') 
+        this.sonido.volume = 0.5
+
         this.img = new Image()
         this.img.src = 'images/balas2.png'
         this.img.onload = ()=>{
@@ -48,7 +51,7 @@ class Disparos {
     move(xx,yy){
 
         if(this.isEnemy === false){
-            this.y += -10
+            this.y += -20
         } 
         if (this.y <= -10){
                 this.y = -10 // ESTO ES PARA QUE LA BALA DE PLAYER NO SE SUME [Y=] HASTA INFINITO
@@ -57,10 +60,10 @@ class Disparos {
         if(this.isEnemy === true){
 
            if(!this.isOut){
-            this.vy = 10
+            this.vy = 20
             this.y += this.vy
 
-            if(this.y >= 500){
+            if(this.y >= 800){
                 
                 this.x = xx
                 this.y = yy
@@ -81,6 +84,9 @@ class Disparos {
             let isPressed = event.type === 'keydown'  
         
         if (isPressed && event.keyCode === 82){
+            this.sonido.pause()
+            this.sonido.currentTime = 0
+            this.sonido.play()
             this.x = x
             this.y = y
         

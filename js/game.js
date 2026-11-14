@@ -50,6 +50,27 @@ class Game {
     }
 
     landingPage(){
+    this.menuMusic = new Audio('sound/main.mp3');
+    this.menuMusic.loop = true   // Para que se repita en bucle
+    this.menuMusic.volume = 0.2  // Volumen al 50%
+    
+    this.iniciarMusica = () => {
+        this.menuMusic.play().then(() => {
+            // Si logra sonar, quitamos los detectores para no repetir esto
+            window.removeEventListener('click', this.iniciarMusica);
+            window.removeEventListener('keydown', this.iniciarMusica);
+        }).catch(() => {
+            // Si el navegador la bloquea al inicio, no pasa nada; 
+            // sonará en cuanto el jugador haga clic o pulse una tecla.
+        });
+    };
+
+    // Intentamos reproducirla de inmediato (funcionará si el jugador ya interactuó antes)
+    this.iniciarMusica();
+
+    window.addEventListener('click', this.iniciarMusica);
+    window.addEventListener('keydown', this.iniciarMusica);
+
     this.landingInterval = setInterval(()=>{
         this.landing.clear()
         this.marco.clear()
@@ -63,8 +84,8 @@ class Game {
        },1000/60)
 
     }
-
     endingPage(){
+
         this.landing.clear()
         this.marco.clear()
         this.endbut.clear()
@@ -73,6 +94,7 @@ class Game {
         this.marco.draw()
         this.endbut.draw()
         this.endbut.animate()
+        myGame.restartGame()
 
     }
 
@@ -92,19 +114,19 @@ class Game {
     }
 
     stop(){
+        
         if(this.player.health <= 0 || this.enemigo.health <= 0){
         
-            setTimeout(() => {
-               
+            setTimeout(() => {   
+                this.iniciarMusica()    
                 clearInterval(this.intervalId) 
-            this.endingInterval = setInterval(()=>{
-                    this.endingPage()
-                    this.restartGame()
-               },1000/60)
-            }, 1000);
-            
-            
-        }    
+                this.endingInterval = setInterval(()=>{
+                        myGame.endingPage()
+                        console.log('end int')
+                        
+                },1000/60)
+                }, 1000); 
+            }    
     }
 
     isDeadPlayer(){
@@ -139,8 +161,11 @@ class Game {
         const handleEnter = (event) => {
             if (event.key === 'Enter') {
                 clearInterval(this.landingInterval);
+                this.menuMusic.pause();
+                this.menuMusic.currentTime = 0;
                 removeEventListener('keydown', handleEnter);
                 myGame.start();
+                this.avion.sonidoJet()
             }
         };
 
@@ -150,13 +175,16 @@ class Game {
     restartGame(){
         const handleEnter2 = (event) => {
             if (event.key === 'Enter') {
-                clearInterval(this.endingInterval);
+                this.player.health = 100
+                console.log('rest int')
                 removeEventListener('keydown', handleEnter2);
-                location.reload()// preguntar mañama
+                clearInterval(myGame.endingInterval)
+
+
             }
         };
 
-                addEventListener('keydown', handleEnter2);
+                window.addEventListener('keydown', handleEnter2);
     }
 
     clear(){
