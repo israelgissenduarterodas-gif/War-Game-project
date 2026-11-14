@@ -84,9 +84,9 @@ class Disparos {
             let isPressed = event.type === 'keydown'  
         
         if (isPressed && event.keyCode === 82){
-            this.sonido.pause()
-            this.sonido.currentTime = 0
-            this.sonido.play()
+            //this.sonido.pause()
+            //this.sonido.currentTime = 0
+            //this.sonido.play()
             this.x = x
             this.y = y
         

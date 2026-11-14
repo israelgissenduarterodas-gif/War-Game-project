@@ -118,7 +118,6 @@ class Game {
             this.checkCollisions()
             this.isDeadPlayer()
             this.isDeadEnemy()
-            this.stop()
 
         }, 1000/60);
     }
@@ -126,23 +125,23 @@ class Game {
     stop(){
         
         if(this.player.health <= 0){
-            this.avion.sonido.pause()
-            
-            setTimeout(() => {   
-                
+           
+                this.avion.sonido.pause() 
                 this.iniciarMusica()    
                 clearInterval(this.intervalId) 
 
                 this.endingInterval = setInterval(()=>{
+                        
                         this.endingPage()
                         console.log('end int')
                         
                 },1000/60)
-                }, 1000)
+
             }    
     }
 
     isDeadPlayer(){
+
         if(this.player.health <= 0){
             this.dead.clear()
             
@@ -151,12 +150,16 @@ class Game {
             this.player.lifeStatus(this.player.health)
            
             this.dead.update()
-            
+
+            if(this.dead.isEnd){
+                this.stop()
+            }
             
         }
     }
 
     isDeadEnemy(){
+            
         if(this.enemigo.health <= 0){
             
             this.deadEnemigo.clear()
@@ -166,36 +169,44 @@ class Game {
             this.enemigo.lifeStatus(this.enemigo.health)
             
             this.deadEnemigo.update()
+
+            if(this.deadEnemigo.isEnd){
+                this.stop()//CAMBIAR METODO
+            }
             
         }
     }
 
     startGame(){
-        const handleEnter = (event) => {
+        this.handleEnter = (event) => {
             if (event.key === 'Enter') {
                 clearInterval(this.landingInterval);
                 this.menuMusic.pause();
                 this.menuMusic.currentTime = 0;
-                removeEventListener('keydown', handleEnter);
+                removeEventListener('keydown', this.handleEnter);
                 myGame.start();
                 this.avion.sonidoJet()
             }
         };
 
-                addEventListener('keydown', handleEnter);
+                addEventListener('keydown', this.handleEnter);
     }
 
     restartGame(){
-
-        addEventListener('keydown', (event) => {
+        
+      this.handleEnter2 = (event) => {
             if (event.key === 'Enter') {
-                    this.player.health = 100
-                    console.log('rest int')
+                    console.log('restar')
                     clearInterval(this.endingInterval)
                     this.menuMusic.pause()
+                    removeEventListener('keydown', this.handleEnter)
+                    this.player.health = 100
+                    this.enemigo.health = 100
+                    location.reload()
                     
             }
-        })
+        }
+        addEventListener('keydown',this.handleEnter2)
     }
 
     clear(){
@@ -254,7 +265,6 @@ class Game {
             this.impact.draw(this.enemigo.x,this.enemigo.y)
             this.impact.update(this.collision)
             this.enemigo.health -= 20 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
-            console.log(this.enemigo.health)
             this.enemigo.disparoRecibido++
       }
 
@@ -272,7 +282,14 @@ class Game {
             
       }
 
-
+    if(this.avion.collidesWith(this.disparo)){
+            this.collision = true
+            this.impact.clear()
+            this.impact.draw(this.avion.x,this.avion.y)
+            this.impact.update(this.collision)
+            this.avion.health -= 40 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            
+    }
     }
 
     upDate(){

@@ -9,6 +9,7 @@ class Avion {
         this.frameTicks = 0 
         this.frameSpeed = 8
         this.isRight = false
+        this.health = 20
 
         this.sonido = new Audio('sound/jetfigth.mp3') 
         this.sonido.volume = 0.5

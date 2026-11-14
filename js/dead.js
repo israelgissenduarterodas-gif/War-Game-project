@@ -9,6 +9,7 @@ class Dead {
         this.isMoving = false
         this.frameTicks = 0 
         this.frameSpeed = 16
+        this.isEnd = false
 
         this.img = new Image()
         this.img.src = 'images/dead2.png'
@@ -53,7 +54,8 @@ class Dead {
                 this.frameIndex++;
 
                 if (this.frameIndex >= this.vFrames) {
-                    this.frameIndex = 0;
+                    this.frameIndex = 0
+                    this.isEnd = true
                 }
             }
         }

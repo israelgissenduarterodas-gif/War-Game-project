@@ -46,15 +46,16 @@ class Impact {
     update(col){ // el parametro col es si el resultado de collision es true
         
         if(col){
-       
-            this.frameTicks++;
+            
+            this.frameTicks++
  
             if (this.frameTicks >= this.frameSpeed) {
-                this.frameTicks = 0;
-                this.frameIndex++;
+                this.frameTicks = 0
+                this.frameIndex++
 
                 if (this.frameIndex >= this.vFrames) {
-                    this.frameIndex = 0;
+                    this.frameIndex = 0
+                    col = false
                 }
             }
         }
