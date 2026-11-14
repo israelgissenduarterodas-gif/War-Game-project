@@ -11,6 +11,7 @@ class Enemigo {
         this.frameTicks = 0 
         this.frameSpeed = 8
         this.isRight = false
+        this.disparoRecibido = 0
     
         this.img = new Image()
         this.img.src = 'images/sprite.png'

@@ -2,10 +2,10 @@ class Marco{
     
         constructor(ctx){
         this.ctx = ctx
-        this.x = 500 - (350/2)
-        this.y = 250 - (200/2)
-        this.w = 350
-        this.h = 200
+        this.x = 500 - (500/2)
+        this.y = 250 - (300/2)
+        this.w = 500
+        this.h = 300
         this.isMoving = false
         this.frameTicks = 0 
         this.frameSpeed = 8

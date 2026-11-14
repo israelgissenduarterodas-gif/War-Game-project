@@ -2,8 +2,9 @@ class Game {
     constructor(canvasId) {
 
         this.canvas = document.getElementById('canvas')
-
         this.ctx = canvas.getContext('2d')
+        
+        
         
         this.deadInterval = null
         this.intervalId = null
@@ -47,9 +48,14 @@ class Game {
             this.enemigo.x,
             this.enemigo.y)
 
+        this.puntos = new Puntuacion(this.ctx)
+
     }
 
     landingPage(){
+
+    this.startGame()    
+
     this.menuMusic = new Audio('sound/main.mp3');
     this.menuMusic.loop = true   // Para que se repita en bucle
     this.menuMusic.volume = 0.2  // Volumen al 50%
@@ -81,9 +87,11 @@ class Game {
         this.startbut.draw()
 
         this.startbut.animate()
+        
        },1000/60)
 
     }
+
     endingPage(){
 
         this.landing.clear()
@@ -94,7 +102,9 @@ class Game {
         this.marco.draw()
         this.endbut.draw()
         this.endbut.animate()
-        myGame.restartGame()
+        this.puntos.clear()
+        this.puntos.draw(this.enemigo.disparoRecibido, this.player.disparoRecibido)
+        this.restartGame()
 
     }
 
@@ -115,17 +125,20 @@ class Game {
 
     stop(){
         
-        if(this.player.health <= 0 || this.enemigo.health <= 0){
-        
+        if(this.player.health <= 0){
+            this.avion.sonido.pause()
+            
             setTimeout(() => {   
+                
                 this.iniciarMusica()    
                 clearInterval(this.intervalId) 
+
                 this.endingInterval = setInterval(()=>{
-                        myGame.endingPage()
+                        this.endingPage()
                         console.log('end int')
                         
                 },1000/60)
-                }, 1000); 
+                }, 1000)
             }    
     }
 
@@ -173,18 +186,16 @@ class Game {
     }
 
     restartGame(){
-        const handleEnter2 = (event) => {
+
+        addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
-                this.player.health = 100
-                console.log('rest int')
-                removeEventListener('keydown', handleEnter2);
-                clearInterval(myGame.endingInterval)
-
-
+                    this.player.health = 100
+                    console.log('rest int')
+                    clearInterval(this.endingInterval)
+                    this.menuMusic.pause()
+                    
             }
-        };
-
-                window.addEventListener('keydown', handleEnter2);
+        })
     }
 
     clear(){
@@ -231,10 +242,9 @@ class Game {
             this.impact.clear()
             this.impact.draw(this.player.x,this.player.y)
             this.impact.update(this.collision)
-            this.player.health -= 2 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            this.player.health -= 20 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
             this.porcentaje.updateHealth(this.player.health)
-            
-            
+            this.player.disparoRecibido++
             
       }
 
@@ -243,8 +253,9 @@ class Game {
             this.impact.clear()
             this.impact.draw(this.enemigo.x,this.enemigo.y)
             this.impact.update(this.collision)
-            this.enemigo.health -= 2 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            this.enemigo.health -= 20 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
             console.log(this.enemigo.health)
+            this.enemigo.disparoRecibido++
       }
 
        if (this.player.collidesWith(this.misil)) {

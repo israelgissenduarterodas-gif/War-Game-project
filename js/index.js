@@ -4,5 +4,4 @@ let myGame = new Game(canVas)
 
 myGame.landingPage()
 
-myGame.startGame()
 

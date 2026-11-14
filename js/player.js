@@ -9,6 +9,7 @@ class Player {
         this.vy = 0
         this.ay = 0
         this.health = 100
+        this.disparoRecibido = 0
         this.inGround = true
         this.ground = 420
         this.frameTicks = 0 
