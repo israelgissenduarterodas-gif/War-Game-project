@@ -15,7 +15,7 @@ class Puntuacion {
     }
 
     draw(hits, recibido){
-        this.ctx.fillText(`Hits: ${hits}`, 400, 320)
+        this.ctx.fillText(`Player Hits: ${hits}`, 400, 320)
         this.ctx.fillText(`Enemy Hits: ${recibido}`, 400, 350)
         this.ctx.font = 'bold 15px Arial'
         this.ctx.fillStyle = '#e9edf0'

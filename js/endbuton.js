@@ -48,7 +48,7 @@ class Endbutton{
 
     animate(){
 
-         this.frameTicks++
+         this.frameTicks += 8
             
             if (this.frameTicks >= this.frameSpeed) {
                 this.frameTicks = 0

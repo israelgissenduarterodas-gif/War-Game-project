@@ -26,6 +26,8 @@ class Game {
 
         this.avion = new Avion(this.ctx)
 
+        this.avioncrash =new AvionDead(this.ctx)
+
         this.misil = new Misil(this.ctx,this.avion.x,this.avion.y)
 
         this.collision = false
@@ -118,6 +120,7 @@ class Game {
             this.checkCollisions()
             this.isDeadPlayer()
             this.isDeadEnemy()
+            
 
         }, 1000/60);
     }
@@ -133,9 +136,8 @@ class Game {
                 this.endingInterval = setInterval(()=>{
                         
                         this.endingPage()
-                        console.log('end int')
                         
-                },1000/60)
+                },500)
 
             }    
     }
@@ -161,12 +163,14 @@ class Game {
     isDeadEnemy(){
             
         if(this.enemigo.health <= 0){
+
+            this.disparoEnemigo.isActive = false
+
+            this.enemigo.isAlive = false
             
             this.deadEnemigo.clear()
             
             this.deadEnemigo.draw(this.enemigo.x,this.enemigo.y)
-            
-            this.enemigo.lifeStatus(this.enemigo.health)
             
             this.deadEnemigo.update()
 
@@ -174,6 +178,18 @@ class Game {
                 this.stop()//CAMBIAR METODO
             }
             
+        }
+    }
+
+    isDeadAvion(){
+        if(this.avion.health <= 0){
+            this.avion.isAlive = false
+            
+            this.avioncrash.clear()
+
+            this.avioncrash.draw(this.avion.x,this.avion.y)
+
+            this.avioncrash.update()
         }
     }
 
@@ -229,7 +245,9 @@ class Game {
         this.avion.move()
         this.misil.move(this.avion.x,this.avion.y,this.collision)
         this.disparo.move()
-        this.disparoEnemigo.move(this.enemigo.x,this.enemigo.y)
+        this.disparoEnemigo.move(this.enemigo.x,
+                                 this.enemigo.y,
+                                 this.enemigo.health)
         
     }
 
@@ -238,22 +256,24 @@ class Game {
         this.enemigo.draw()
         this.player.draw()
         this.disparo.draw()
-        this.avion.draw()
+        this.avion.draw(this.avion.health)
         this.misil.draw()
         this.disparoEnemigo.draw()
         this.status.draw()
         this.porcentaje.draw()
+        this.isDeadAvion()
         
     }
 
 
     checkCollisions(){
+        
         if (this.player.collidesWith(this.disparoEnemigo)) {
             this.collision = true
             this.impact.clear()
             this.impact.draw(this.player.x,this.player.y)
             this.impact.update(this.collision)
-            this.player.health -= 20 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            this.player.health -= 5 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
             this.porcentaje.updateHealth(this.player.health)
             this.player.disparoRecibido++
             
@@ -264,7 +284,7 @@ class Game {
             this.impact.clear()
             this.impact.draw(this.enemigo.x,this.enemigo.y)
             this.impact.update(this.collision)
-            this.enemigo.health -= 20 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            this.enemigo.health -= 100 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
             this.enemigo.disparoRecibido++
       }
 
@@ -278,8 +298,6 @@ class Game {
             this.misil.y = this.avion.y
             this.porcentaje.updateHealth(this.player.health)
             
-            
-            
       }
 
     if(this.avion.collidesWith(this.disparo)){
@@ -287,7 +305,8 @@ class Game {
             this.impact.clear()
             this.impact.draw(this.avion.x,this.avion.y)
             this.impact.update(this.collision)
-            this.avion.health -= 40 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            this.avion.health -= 20 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            console.log(this.avion.health)
             
     }
     }

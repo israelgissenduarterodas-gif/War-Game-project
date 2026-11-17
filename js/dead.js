@@ -47,16 +47,18 @@ class Dead {
 
     update(){ 
         
-            this.frameTicks++;
+            if(!this.isEnd){
+                this.frameTicks++;
  
             if (this.frameTicks >= this.frameSpeed) {
                 this.frameTicks = 0;
                 this.frameIndex++;
 
                 if (this.frameIndex >= this.vFrames) {
-                    this.frameIndex = 0
+                    this.frameIndex = 4
                     this.isEnd = true
                 }
+            }
             }
         }
     }

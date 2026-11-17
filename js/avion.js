@@ -9,7 +9,8 @@ class Avion {
         this.frameTicks = 0 
         this.frameSpeed = 8
         this.isRight = false
-        this.health = 20
+        this.health = 100
+        this.isAlive = true
 
         this.sonido = new Audio('sound/jetfigth.mp3') 
         this.sonido.volume = 0.5
@@ -35,8 +36,9 @@ class Avion {
     }
 
     draw(){
+
         
-        if(this.isReady){
+        if(this.isReady && this.isAlive){
             this.ctx.drawImage(
                 this.img,
                 this.frameIndex * this.frameW,
@@ -51,24 +53,24 @@ class Avion {
     }
 
     move(){
+      if(this.isAlive){
         
-        if(this.isRight === false){
+        if(!this.isRight){
             this.vx = 6
             this.x += this.vx
+
            if(this.x >= 2600){
                 this.isRight = true
-
             }
          } 
           
-         
          if (this.isRight === true){
-            this.isRight = false
             this.x = 0
-            
+            this.isRight = false
         }
-         
-
+      } 
+        
+        
     }
 
     collidesWith(element){

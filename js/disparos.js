@@ -8,6 +8,7 @@ class Disparos {
         this.vx = 0
         this.isOut = false
         this.isMoving = false
+        this.isActive = true
         this.frameTicks = 0 
         this.frameSpeed = 2
         this.isEnemy = isEnemy
@@ -34,7 +35,8 @@ class Disparos {
     }
 
     draw(){
-        if(this.isReady){
+        
+            if(this.isReady && this.isActive){
             this.ctx.drawImage(
                 this.img,
                 this.frameIndex * this.frameW,
@@ -46,9 +48,10 @@ class Disparos {
                 this.w,
                 this.h)
         }
+        
     }
 
-    move(xx,yy){
+    move(xx,yy,health){
 
         if(this.isEnemy === false){
             this.y += -20
@@ -89,17 +92,15 @@ class Disparos {
             //this.sonido.play()
             this.x = x
             this.y = y
-        
         } 
         }
     }
 
     update() {
         
-        if (this.vy !== 0) {
+        if (this.vy !== 0){
             this.isMoving = true;
-
-            
+           
         } else {
             this.isMoving = false;
             this.frameIndex = 0; 
@@ -108,7 +109,6 @@ class Disparos {
         if (this.isMoving) {
             this.frameTicks++;
 
-            
             if (this.frameTicks >= this.frameSpeed) {
                 this.frameTicks = 0;
                 this.frameIndex++;

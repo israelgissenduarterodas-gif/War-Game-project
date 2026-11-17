@@ -30,19 +30,12 @@ class Enemigo {
         
     }
 
-    lifeStatus(health){
-        
-        if(health <= 0){
-            this.isAlive = false
-            
-        }
-    }
-
     clear(){
         this.ctx.clearRect(this.x, this.y, 0, 0)
     }
 
     draw(){
+    
     if(!this.isAlive) return;
         if(this.isReady){
             this.ctx.drawImage(
