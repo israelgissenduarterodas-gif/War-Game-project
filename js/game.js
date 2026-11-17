@@ -314,7 +314,7 @@ class Game {
             this.impact.clear()
             this.impact.draw(this.enemigo.x,this.enemigo.y)
             this.impact.update(this.collision)
-            this.enemigo.health -= 100 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            this.enemigo.health -= 5 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
             this.enemigo.disparoRecibido++
       }
 
@@ -336,7 +336,7 @@ class Game {
             this.impact.clear()
             this.impact.draw(this.avion.x,this.avion.y)
             this.impact.update(this.collision)
-            this.avion.health -= 20 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
+            this.avion.health -= 10 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
             console.log(this.avion.health)
             
     }
