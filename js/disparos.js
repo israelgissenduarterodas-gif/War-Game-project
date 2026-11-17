@@ -51,9 +51,10 @@ class Disparos {
         
     }
 
-    move(xx,yy,health){
+    move(xx,yy){
 
-        if(this.isEnemy === false){
+        if(this.isActive){
+            if(this.isEnemy === false){
             this.y += -20
         } 
         if (this.y <= -10){
@@ -67,15 +68,11 @@ class Disparos {
             this.y += this.vy
 
             if(this.y >= 800){
-                
                 this.x = xx
-                this.y = yy
-                
+                this.y = yy  
             }
            }
-
-            
-
+        }
         }
         
          

@@ -15,6 +15,8 @@ class Avion {
         this.sonido = new Audio('sound/jetfigth.mp3') 
         this.sonido.volume = 0.5
         this.sonido.loop = true
+        this.explosionAudio = new Audio('sound/explosion.mp3') 
+        this.explosionAudio.volume = 0.5
     
         this.img = new Image()
         this.img.src = 'images/f18.png'

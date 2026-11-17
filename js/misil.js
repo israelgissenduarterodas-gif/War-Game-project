@@ -10,6 +10,7 @@ class Misil {
         this.isRight = false
         this.isDrop = false
         this.isMoving = false
+        this.isActive = true
         this.frameTicks = 0 
         this.frameSpeed = 8
 
@@ -32,7 +33,8 @@ class Misil {
     }
 
     draw(){
-        if(this.isReady){
+        if (this.isActive){
+            if(this.isReady){
             this.ctx.drawImage(
                 this.img,
                 this.frameIndex * this.frameW,
@@ -43,6 +45,7 @@ class Misil {
                 this.y,
                 this.w,
                 this.h)
+        }
         }
     }
 
@@ -70,6 +73,7 @@ class Misil {
         }
 
         if (this.x >= 1000){
+            this.isRight = true
             this.isDrop = false
             this.x = xx
             this.y = yy

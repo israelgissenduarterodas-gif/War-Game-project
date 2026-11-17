@@ -3,8 +3,8 @@ class AvionDead {
         this.ctx = ctx
         this.x = 0
         this.y = 0
-        this.w = 140
-        this.h = 140
+        this.w = 180
+        this.h = 180
         this.isEnd = false
 
         this.frameTicks = 0 

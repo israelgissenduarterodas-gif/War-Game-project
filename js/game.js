@@ -32,6 +32,8 @@ class Game {
 
         this.collision = false
 
+        this.collisionMisil = false
+
         this.porcentaje = new Porcentaje(this.ctx)
 
         this.impact = new Impact(this.ctx)
@@ -51,6 +53,8 @@ class Game {
             this.enemigo.y)
 
         this.puntos = new Puntuacion(this.ctx)
+
+        this.winPuntos = new Winending(this.ctx)
 
     }
 
@@ -96,18 +100,36 @@ class Game {
 
     endingPage(){
 
-        this.landing.clear()
-        this.marco.clear()
-        this.endbut.clear()
+            this.landing.clear()
+            this.marco.clear()
+            this.endbut.clear()
 
-        this.landing.draw()
-        this.marco.draw()
-        this.endbut.draw()
-        this.endbut.animate()
-        this.puntos.clear()
-        this.puntos.draw(this.enemigo.disparoRecibido, this.player.disparoRecibido)
-        this.restartGame()
+            this.landing.draw()
+            this.marco.draw()
+            this.endbut.draw()
+            this.endbut.animate()
+            this.puntos.clear()
+            this.puntos.draw(this.enemigo.disparoRecibido, this.player.disparoRecibido)
+            this.restartGame()
 
+    }
+
+    winPage(){
+
+        if(this.avion.health <= 0 && this.enemigo.health <= 0){
+            this.iniciarMusica()    
+            clearInterval(this.intervalId) 
+            setInterval(() => {
+                this.landing.clear()
+                this.marco.clear()
+
+                this.landing.draw()
+                this.marco.draw()
+                this.winPuntos.clear()
+                this.winPuntos.draw(this.enemigo.disparoRecibido, this.player.disparoRecibido)
+            }, 500);
+            this.restartGame()
+        }
     }
 
     start(){
@@ -120,12 +142,15 @@ class Game {
             this.checkCollisions()
             this.isDeadPlayer()
             this.isDeadEnemy()
+            this.isDeadAvion()
+            this.misilStop()
+            this.winPage()
             
 
         }, 1000/60);
     }
 
-    stop(){
+    stopPlayer(){
         
         if(this.player.health <= 0){
            
@@ -154,7 +179,7 @@ class Game {
             this.dead.update()
 
             if(this.dead.isEnd){
-                this.stop()
+                this.stopPlayer()
             }
             
         }
@@ -173,16 +198,14 @@ class Game {
             this.deadEnemigo.draw(this.enemigo.x,this.enemigo.y)
             
             this.deadEnemigo.update()
-
-            if(this.deadEnemigo.isEnd){
-                this.stop()//CAMBIAR METODO
-            }
             
         }
     }
 
     isDeadAvion(){
-        if(this.avion.health <= 0){
+        if(this.avion.health <= 0 && this.avion.isAlive){
+            this.avion.sonido.pause()
+            this.avion.explosionAudio.play()
             this.avion.isAlive = false
             
             this.avioncrash.clear()
@@ -190,7 +213,19 @@ class Game {
             this.avioncrash.draw(this.avion.x,this.avion.y)
 
             this.avioncrash.update()
+
         }
+        
+    }
+
+    misilStop(){
+    
+        if(!this.avion.isAlive && this.misil.isRight){
+            this.misil.isActive = false
+            this.misil.x = 0
+            this.misil.y = 0
+        }
+
     }
 
     startGame(){
@@ -212,12 +247,9 @@ class Game {
         
       this.handleEnter2 = (event) => {
             if (event.key === 'Enter') {
-                    console.log('restar')
-                    clearInterval(this.endingInterval)
-                    this.menuMusic.pause()
+                   
                     removeEventListener('keydown', this.handleEnter)
-                    this.player.health = 100
-                    this.enemigo.health = 100
+                    
                     location.reload()
                     
             }
@@ -246,8 +278,7 @@ class Game {
         this.misil.move(this.avion.x,this.avion.y,this.collision)
         this.disparo.move()
         this.disparoEnemigo.move(this.enemigo.x,
-                                 this.enemigo.y,
-                                 this.enemigo.health)
+                                 this.enemigo.y)
         
     }
 
@@ -261,7 +292,6 @@ class Game {
         this.disparoEnemigo.draw()
         this.status.draw()
         this.porcentaje.draw()
-        this.isDeadAvion()
         
     }
 
@@ -289,14 +319,15 @@ class Game {
       }
 
        if (this.player.collidesWith(this.misil)) {
-            this.collision = true
+            this.collisionMisil = true
             this.impact.clear()
             this.impact.draw(this.player.x,this.player.y)
-            this.impact.update(this.collision)
+            this.impact.update(this.collisionMisil)
             this.player.health -= 10 //FUNCIONA, PERO HAY QUE CORREGIR LA COLISION
             this.misil.x = this.avion.x
             this.misil.y = this.avion.y
             this.porcentaje.updateHealth(this.player.health)
+            
             
       }
 
